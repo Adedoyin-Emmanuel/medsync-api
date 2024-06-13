@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import response from "../utils/response";
+import { response } from "../utils/";
 import logger from "../utils/logger";
 import { SOMETHING_WENT_WRONG } from "../constants/errors";
+import Joi from "joi";
 
 const useErrorHandler = (
   err: Error,
@@ -9,12 +10,17 @@ const useErrorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  logger.error(err);
+  logger.error(err.stack);
+
+  if (err instanceof Joi.ValidationError) {
+    return response(res, 400, err.details[0].message);
+  }
   const isProduction = process.env.NODE_ENV === "production";
+
   return response(
     res,
     500,
-    `${SOMETHING_WENT_WRONG} ${isProduction ? "" : err}`
+    `${SOMETHING_WENT_WRONG} ${isProduction ? "" : err.stack}`
   );
 };
 
