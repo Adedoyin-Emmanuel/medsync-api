@@ -1,5 +1,5 @@
 import multer from "multer";
-import {logger} from "../utils/";
+import { logger } from "../utils/";
 import response from "../utils/response";
 import localStorage from "../services/upload/local";
 import cloudinaryStorage from "../services/upload/cloudinary";
@@ -8,6 +8,7 @@ import { LIMIT_FILE_SIZE, UNSUPPORTED_FILE_TYPE } from "../constants/errors";
 import {
   ALLOWED_FILE_UPLOAD_EXTENSIONS,
   MAX_FILE_SIZE,
+  IS_PRODUCTION,
 } from "../constants/app";
 
 declare global {
@@ -43,7 +44,7 @@ const fileFilter = async (req: Request, file: Express.Multer.File, cb: any) => {
     const error: any = new Error(UNSUPPORTED_FILE_TYPE);
     error.code = "UNSUPPORTED_FILE_TYPE";
     return cb(error);
-  } catch (err) {
+  } catch (err: any) {
     logger.error(err.message);
   }
 };
@@ -58,13 +59,14 @@ const upload = multer({
 
 const fileUpload = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const isProduction = process.env.NODE_ENV === "production";
     // @ts-ignore
-    req.storage = isProduction ? await cloudinaryStorage() : localStorage();
+    req.storage = IS_PRODUCTION
+      ? await cloudinaryStorage()
+      : await localStorage();
     next();
   } catch (error) {
     next(error);
   }
 };
 
-export {fileUpload, upload, handleFileSizeLimitException};
+export { fileUpload, upload, handleFileSizeLimitException };
