@@ -1,0 +1,9 @@
+FROM bitnami/postgresql:latest
+
+ENV POSTGRES_USER=admin
+ENV POSTGRES_PASSWORD=admin123
+ENV POSTGRES_DB=mydb
+
+EXPOSE 5432
+
+

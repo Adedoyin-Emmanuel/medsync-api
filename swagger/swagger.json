@@ -1,0 +1,26 @@
+{
+  "openapi": "3.0.0",
+  "x-stoplight": {
+    "id": "xf6wrr27dydv5"
+  },
+  "info": {
+    "version": "1.0.0",
+    "description": "API Specification",
+    "title": "Your Specification",
+    "contact": {
+      "email": "adedoyine535@gmail.com",
+      "name": "Adedoyin Emmanuel Adeniyi",
+      "url": "https://github.com/adedoyin-emmanuel"
+    },
+    "termsOfService": "https://rendesvouz.com/privacy"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:2800",
+      "description": "Your API"
+    }
+  ],
+ "paths":{
+
+ }
+}

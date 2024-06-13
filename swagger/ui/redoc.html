@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>API Docs</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/redoc@latest/bundles/redoc.standalone.js"></script>
+  </head>
+  <body>
+    <div id="redoc-container"></div>
+    <script>
+      Redoc.init(
+        "swagger.json",
+        {
+          scrollYOffset: 50,
+          theme: {
+            colors: {
+              primary: {
+                main: "#5C6AC4",
+              },
+            },
+          },
+        },
+        document.getElementById("redoc-container")
+      );
+    </script>
+  </body>
+</html>
