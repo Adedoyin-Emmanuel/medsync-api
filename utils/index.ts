@@ -3,16 +3,17 @@ import connectToDb from "./database";
 import corsOptions from "./corsOptions";
 import accessLogStream from "./accessLog";
 import transporter from "./mail.config";
-import prisma from "./prisma";
 import logger from "./logger";
-
+import squad from "./squad";
+import eventEmitter from "./eventEmitter";
 
 export {
-  connectToDb,
+  connectToDb as connectToDb,
   response,
   corsOptions,
   accessLogStream,
   transporter,
-  prisma,
-  logger
+  logger,
+  squad,
+  eventEmitter,
 };
