@@ -6,15 +6,22 @@ declare global {
   namespace Express {
     interface Request {
       user?: any;
+      userType: "user" | "hospital";
     }
   }
 }
 
-const useCheckRole = (role: string) => {
+const useCheckRole = (role: "user" | "hospital" | "admin") => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const isUser = req.user;
+    const userType = req.userType;
 
-    return response(res, 403, INSUFFICIENT_PERMISSION);
+    console.log(userType, role);
+
+    if (userType === role) {
+      next();
+    } else {
+      return response(res, 403, INSUFFICIENT_PERMISSION);
+    }
   };
 };
 
