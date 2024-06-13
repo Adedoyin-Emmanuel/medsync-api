@@ -8,3 +8,8 @@ export const MORGAN_CONFIG = IS_PRODUCTION
   : "dev";
 
 export const PORT = process.env.PORT || 2800;
+
+export const MEDICATION_CREATED = "Medication Created";
+export const ACCOUNT_CREATED = "Account Created";
+export const APPOINTMENT_CREATED = "Appointment Created";
+export const APPOINTMENT_UPDATED = "Appointment Updated";

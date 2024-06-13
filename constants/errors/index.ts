@@ -4,4 +4,5 @@ export const INSUFFICIENT_PERMISSION =
 export const SOMETHING_WENT_WRONG =
   "Something went wrong. Please try again later!";
 export const LIMIT_FILE_SIZE = "File size exceeds maximum limit";
-export const UNSUPPORTED_FILE_TYPE = "Unsupported file type, please upload a JPEG, PNG or JPG file";
+export const UNSUPPORTED_FILE_TYPE =
+  "Unsupported file type, please upload a JPEG, PNG or JPG file";

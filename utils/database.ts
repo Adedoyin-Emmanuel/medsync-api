@@ -1,8 +1,9 @@
-import prisma from "./prisma";
 import logger from "./logger";
+import mongoConnect from "./mongo";
+
 const connectToDb = async (): Promise<any> => {
   try {
-    await prisma.$connect();
+    await mongoConnect();
   } catch (error: any) {
     logger.error(error);
     throw error;
