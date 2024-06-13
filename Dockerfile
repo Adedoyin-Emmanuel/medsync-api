@@ -1,9 +1,15 @@
-FROM bitnami/postgresql:latest
+FROM node:latest
 
-ENV POSTGRES_USER=admin
-ENV POSTGRES_PASSWORD=admin123
-ENV POSTGRES_DB=mydb
+WORKDIR /usr/src/app
 
-EXPOSE 5432
+COPY package*.json ./
 
+RUN npm install
 
+COPY . .
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
