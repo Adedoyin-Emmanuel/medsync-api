@@ -10,10 +10,13 @@ import corsOptions from "./utils/corsOptions";
 import { accessLogStream, logger } from "./utils";
 import { PORT, IS_PRODUCTION, MORGAN_CONFIG } from "./constants/app";
 import helmet from "helmet";
-
+import { connectToDb } from "./utils";
+import "./events";
 
 import baseRouter from "./features/base/route";
+import authRouter from "./features/auth/route";
 import swaggerRouter from "./swagger";
+
 dotenv.config();
 
 const app = express();
@@ -31,11 +34,13 @@ app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/", baseRouter);
+app.use("/api/auth", authRouter);
 app.use("/api-docs", swaggerRouter);
 
 app.use(useNotFound);
 app.use(useErrorHandler);
 
 export const server = app.listen(PORT, () => {
+  connectToDb();
   logger.info(`Server running on port ${PORT}`);
 });
