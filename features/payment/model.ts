@@ -18,7 +18,8 @@ const PaymentSchema = new mongoose.Schema(
     },
     transactionReference: {
       type: String,
-      required: true,
+      required: false,
+      default: null,
     },
 
     status: {

@@ -16,10 +16,10 @@ paymentRouter.post(
 );
 
 paymentRouter.get(
-  "/hospital-transaction",
+  "/hospital-transactions",
   PaymentController.getHospitalTransactions
 );
-paymentRouter.get("/user-transaction", PaymentController.getUserTransactions);
+paymentRouter.get("/user-transactions", PaymentController.getUserTransactions);
 
 paymentRouter.post(
   "/initiate-hospital-payment",

@@ -11,9 +11,8 @@ export const createHospitalSubMerchantAccountSchema = Joi.object({
 export const createHospitalTransactionSchema = Joi.object({
   amount: Joi.number().required(),
   description: Joi.string().required(),
-  transactionType: Joi.string().required(),
-  hospitalId: Joi.string().required(),
   userId: Joi.string().required(),
+  callbackUrl: Joi.string().required(),
 });
 
 export const createUserTransactionSchema = createHospitalTransactionSchema;
