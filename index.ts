@@ -18,6 +18,7 @@ import authRouter from "./features/auth/route";
 import userRouter from "./features/user/route";
 import drugRouter from "./features/drug/route";
 import medicationRouter from "./features/medication/route";
+import appointmentRouter from "./features/appointment/route";
 import swaggerRouter from "./swagger";
 
 dotenv.config();
@@ -41,6 +42,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/drug", drugRouter);
 app.use("/api/medication", medicationRouter);
+app.use("/api/appointment", appointmentRouter);
 app.use("/api-docs", swaggerRouter);
 
 app.use(useNotFound);
