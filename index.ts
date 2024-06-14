@@ -47,6 +47,7 @@ app.use("/api/appointment", appointmentRouter);
 app.use("/api/payment", paymentRouter);
 app.use("/api-docs", swaggerRouter);
 
+
 app.use(useNotFound);
 app.use(useErrorHandler);
 
