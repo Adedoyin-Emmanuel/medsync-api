@@ -18,14 +18,20 @@ const PaymentSchema = new mongoose.Schema(
     },
     transactionReference: {
       type: String,
-      required: false,
-      default: null,
+      required: true,
+      unique: true,
     },
 
     status: {
       type: String,
       enum: ["success", "failed", "pending"],
       default: "pending",
+    },
+
+    appointmentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Appointment",
+      required: true,
     },
   },
   { timestamps: true, versionKey: false }

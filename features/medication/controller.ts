@@ -15,7 +15,15 @@ class MedicationController {
     const hospitalId = req.user?._id;
     const hospitalName = req.user?.name;
 
-    const { userId, name, description, dosage, totalPrice, drugs } = value;
+    const {
+      userId,
+      name,
+      description,
+      dosage,
+      totalPrice,
+      drugs,
+      appointmentId,
+    } = value;
 
     const dataToSend = {
       hospitalId,
@@ -25,6 +33,7 @@ class MedicationController {
       dosage,
       totalPrice,
       drugs,
+      appointmentId,
     };
 
     const user = await User.findById(userId);

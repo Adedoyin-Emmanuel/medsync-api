@@ -1,12 +1,14 @@
 import { Response, Request } from "express";
-import { squad, response } from "../../utils";
+import { squad, response, eventEmitter } from "../../utils";
 import {
   createHospitalSubMerchantAccountSchema,
   createHospitalTransactionSchema,
 } from "./schema";
 import { User } from "../auth/model";
 import Payment from "./model";
-import SquadSubMerchant from "@squadco/js/dist/core/sub-merchant";
+import { APPOINTMENT_PAYMENT_SUCCESSFUL } from "../../constants/app";
+import crypto from "crypto";
+
 class PaymentController {
   static async createHospitalSubMerchantAccount(req: Request, res: Response) {
     const hospitalId = req.user?._id;
@@ -58,7 +60,7 @@ class PaymentController {
     const hospitalId = req.user?._id;
     const value = await createHospitalTransactionSchema.validateAsync(req.body);
 
-    const { amount, userId, callbackUrl } = value;
+    const { amount, userId, callbackUrl, appointmentId } = value;
     const hospital = await User.findById(hospitalId);
     const customer = await User.findById(userId);
 
@@ -69,9 +71,10 @@ class PaymentController {
 
     if (!hospitalMerchantId)
       return response(res, 401, "Hospital does not have a merchant id");
+    const amountInKobo = amount * 100;
 
     const dataToSend = {
-      amount,
+      amount: amountInKobo,
       email: customerEmail,
       initiateType: "inline",
       currency: "NGN",
@@ -80,6 +83,7 @@ class PaymentController {
       metadata: {
         customerId: customer._id,
         hospitalId,
+        appointmentId,
       },
       subMerchantId: hospitalMerchantId,
       passCharge: false, // transaction charges will be passed to the merchant (hospital)
@@ -106,6 +110,7 @@ class PaymentController {
       userId,
       amount,
       transactionReference: transactionRef,
+      appointmentId,
     });
 
     const clientResponse = {
@@ -153,6 +158,34 @@ class PaymentController {
       "Transactions fetched successfully",
       transactions
     );
+  }
+
+  static async verifyWebhook(req: Request, res: Response) {
+    const SQUAD_PRIVATE_KEY: any = process.env.NEXT_SQUAD_PRIVATE_KEY;
+    const hash = crypto
+      .createHmac("sha512", SQUAD_PRIVATE_KEY)
+      .update(JSON.stringify(req.body))
+      .digest("hex")
+      .toUpperCase();
+
+    if (hash == req.headers["x-squad-encrypted-body"]) {
+      console.log("Webhook received successfully");
+      console.log(req.body);
+
+      if (req.body.Event == "charge_successful") {
+        console.log(req.body.TransactionRef);
+        const dataToEmit = {
+          transactionRef: req.body.TransactionRef,
+          amount: req.body.Body.Amount,
+          metadata: req.body.Body.meta,
+          status: "success",
+        };
+        eventEmitter.emit(APPOINTMENT_PAYMENT_SUCCESSFUL, dataToEmit);
+      }
+      return response(res, 200, "Webhook received");
+    } else {
+      return response(res, 400, "Invalid webhook received");
+    }
   }
 }
 

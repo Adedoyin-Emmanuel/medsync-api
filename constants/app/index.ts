@@ -13,3 +13,4 @@ export const MEDICATION_CREATED = "Medication Created";
 export const ACCOUNT_CREATED = "Account Created";
 export const APPOINTMENT_CREATED = "Appointment Created";
 export const APPOINTMENT_UPDATED = "Appointment Updated";
+export const APPOINTMENT_PAYMENT_SUCCESSFUL = "Appointment Payment Successful";

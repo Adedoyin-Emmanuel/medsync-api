@@ -2,6 +2,7 @@ import Joi from "joi";
 
 export const createMedicationSchema = Joi.object({
   userId: Joi.string().required(),
+  appointmentId: Joi.string().required(),
   name: Joi.string().required().max(250),
   description: Joi.string().required().max(2500),
   dosage: Joi.string().required().max(2500),

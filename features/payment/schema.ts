@@ -13,6 +13,7 @@ export const createHospitalTransactionSchema = Joi.object({
   description: Joi.string().required(),
   userId: Joi.string().required(),
   callbackUrl: Joi.string().required(),
+  appointmentId: Joi.string().required()
 });
 
 export const createUserTransactionSchema = createHospitalTransactionSchema;

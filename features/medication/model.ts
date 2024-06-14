@@ -61,6 +61,12 @@ const MedicationSchema = new mongoose.Schema(
         required: false,
       },
     ],
+
+    appointmentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Appointment",
+      required: true,
+    },
   },
   { timestamps: true, versionKey: false }
 );
