@@ -13,6 +13,11 @@ userRouter.get("/me", [useAuth], UserController.getMe);
 
 userRouter.get("/", [useAuth], UserController.getAllUsers);
 userRouter.get("/hospital", [useAuth], UserController.getAllHospitals);
+userRouter.get(
+  "/hospital/:subMerchantId",
+  [useAuth],
+  UserController.getHospitalBySubMerchantId
+);
 
 userRouter.get("/:id", UserController.getEntityById);
 

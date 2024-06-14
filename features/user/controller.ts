@@ -17,6 +17,24 @@ class UserController {
     await UserController.getEntity(req, res, "hospital");
   }
 
+  static async getHospitalBySubMerchantId(req: Request, res: Response) {
+    const subMerchantId = req.params.subMerchantId;
+
+    if (!subMerchantId)
+      return response(res, 400, "Sub merchant id is required");
+
+    const hospital = await User.findOne({ merchantId: subMerchantId });
+
+    if (!hospital)
+      return response(
+        res,
+        400,
+        "Hospital with given sub merchant id not found"
+      );
+
+    return response(res, 200, "Hospital retrived successfully", hospital);
+  }
+
   static async getEntity(
     req: Request,
     res: Response,

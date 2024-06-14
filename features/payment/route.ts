@@ -6,24 +6,19 @@ paymentRouter.post(
   "/create-hospital-account",
   PaymentController.createHospitalSubMerchantAccount
 );
+
 paymentRouter.post(
-  "/create-hospital-transaction",
-  PaymentController.createHospitalTransaction
-);
-paymentRouter.post(
-  "/create-user-transaction",
-  PaymentController.createUserTransaction
+  "/initiate-hospital-payment",
+  PaymentController.initiateHospitalPayment
 );
 
 paymentRouter.get(
   "/hospital-transactions",
   PaymentController.getHospitalTransactions
 );
+
 paymentRouter.get("/user-transactions", PaymentController.getUserTransactions);
 
-paymentRouter.post(
-  "/initiate-hospital-payment",
-  PaymentController.initiateHospitalPayment
-);
+paymentRouter.post("/webhook", PaymentController.verifyWebhook);
 
 export default paymentRouter;
