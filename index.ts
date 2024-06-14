@@ -15,6 +15,7 @@ import "./events";
 
 import baseRouter from "./features/base/route";
 import authRouter from "./features/auth/route";
+import userRouter from "./features/user/route";
 import swaggerRouter from "./swagger";
 
 dotenv.config();
@@ -35,6 +36,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/", baseRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 app.use("/api-docs", swaggerRouter);
 
 app.use(useNotFound);
